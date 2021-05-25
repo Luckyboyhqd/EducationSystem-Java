@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.educational.dao.EduCourseMapper" >
+  <resultMap id="BaseResultMap" type="com.educational.entity.EduCourse" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="course_no" property="courseNo" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="style" property="style" jdbcType="VARCHAR" />
+    <result column="credit" property="credit" jdbcType="DECIMAL" />
+    <result column="theory_time" property="theoryTime" jdbcType="DECIMAL" />
+    <result column="experiment_time" property="experimentTime" jdbcType="DECIMAL" />
+    <result column="textbook_id" property="textbookId" jdbcType="VARCHAR" />
+    <result column="staus" property="staus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="other" property="other" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, course_no, name, style, credit, theory_time, experiment_time, textbook_id, staus, 
+    create_time, user_id, remark, other
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.educational.entity.EduCourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from edu_course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from edu_course
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from edu_course
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.educational.entity.EduCourseExample" >
+    delete from edu_course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.educational.entity.EduCourse" >
+    insert into edu_course (id, course_no, name, 
+      style, credit, theory_time, 
+      experiment_time, textbook_id, staus, 
+      create_time, user_id, remark, 
+      other)
+    values (#{id,jdbcType=VARCHAR}, #{courseNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{style,jdbcType=VARCHAR}, #{credit,jdbcType=DECIMAL}, #{theoryTime,jdbcType=DECIMAL}, 
+      #{experimentTime,jdbcType=DECIMAL}, #{textbookId,jdbcType=VARCHAR}, #{staus,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{other,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.educational.entity.EduCourse" >
+    insert into edu_course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="courseNo != null" >
+        course_no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="style != null" >
+        style,
+      </if>
+      <if test="credit != null" >
+        credit,
+      </if>
+      <if test="theoryTime != null" >
+        theory_time,
+      </if>
+      <if test="experimentTime != null" >
+        experiment_time,
+      </if>
+      <if test="textbookId != null" >
+        textbook_id,
+      </if>
+      <if test="staus != null" >
+        staus,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="other != null" >
+        other,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="courseNo != null" >
+        #{courseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null" >
+        #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="theoryTime != null" >
+        #{theoryTime,jdbcType=DECIMAL},
+      </if>
+      <if test="experimentTime != null" >
+        #{experimentTime,jdbcType=DECIMAL},
+      </if>
+      <if test="textbookId != null" >
+        #{textbookId,jdbcType=VARCHAR},
+      </if>
+      <if test="staus != null" >
+        #{staus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        #{other,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.educational.entity.EduCourseExample" resultType="java.lang.Integer" >
+    select count(*) from edu_course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update edu_course
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseNo != null" >
+        course_no = #{record.courseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.style != null" >
+        style = #{record.style,jdbcType=VARCHAR},
+      </if>
+      <if test="record.credit != null" >
+        credit = #{record.credit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.theoryTime != null" >
+        theory_time = #{record.theoryTime,jdbcType=DECIMAL},
+      </if>
+      <if test="record.experimentTime != null" >
+        experiment_time = #{record.experimentTime,jdbcType=DECIMAL},
+      </if>
+      <if test="record.textbookId != null" >
+        textbook_id = #{record.textbookId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staus != null" >
+        staus = #{record.staus,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.other != null" >
+        other = #{record.other,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update edu_course
+    set id = #{record.id,jdbcType=VARCHAR},
+      course_no = #{record.courseNo,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      style = #{record.style,jdbcType=VARCHAR},
+      credit = #{record.credit,jdbcType=DECIMAL},
+      theory_time = #{record.theoryTime,jdbcType=DECIMAL},
+      experiment_time = #{record.experimentTime,jdbcType=DECIMAL},
+      textbook_id = #{record.textbookId,jdbcType=VARCHAR},
+      staus = #{record.staus,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      other = #{record.other,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.educational.entity.EduCourse" >
+    update edu_course
+    <set >
+      <if test="courseNo != null" >
+        course_no = #{courseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null" >
+        style = #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        credit = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="theoryTime != null" >
+        theory_time = #{theoryTime,jdbcType=DECIMAL},
+      </if>
+      <if test="experimentTime != null" >
+        experiment_time = #{experimentTime,jdbcType=DECIMAL},
+      </if>
+      <if test="textbookId != null" >
+        textbook_id = #{textbookId,jdbcType=VARCHAR},
+      </if>
+      <if test="staus != null" >
+        staus = #{staus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        other = #{other,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.educational.entity.EduCourse" >
+    update edu_course
+    set course_no = #{courseNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      style = #{style,jdbcType=VARCHAR},
+      credit = #{credit,jdbcType=DECIMAL},
+      theory_time = #{theoryTime,jdbcType=DECIMAL},
+      experiment_time = #{experimentTime,jdbcType=DECIMAL},
+      textbook_id = #{textbookId,jdbcType=VARCHAR},
+      staus = #{staus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      other = #{other,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--getEduCourses-->
+  <select id="getEduCourses" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edu_course
+  </select>
+
+  <!--getEduCourseByNoAndName-->
+  <select id="getEduCourseByNoAndName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edu_course
+    where course_no = #{no} and name = #{coursName} and staus != 0
+  </select>
+
+  <update id="updateStatusById">
+    update edu_course
+    set
+      staus = #{status,jdbcType=INTEGER}
+    where id = #{cid,jdbcType=VARCHAR}
+  </update>
+
+  <!--updateBookId-->
+  <update id="updateBookId">
+    update edu_course
+    set
+      textbook_id = #{nul,jdbcType=VARCHAR}
+    where textbook_id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!--getCourseByStatus-->
+  <select id="getCourseByStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edu_course
+    where staus = 2
+  </select>
+
+  <!--selectByFind-->
+  <select id="selectByFind" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edu_course
+    where name LIKE CONCAT(CONCAT('%',#{find,jdbcType=VARCHAR}),'%')
+  </select>
+  <!--getCourseByName-->
+  <select id="getCourseByName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edu_course
+    where name = #{courseName}
+  </select>
+  <!--updateCourseByCourseName-->
+  <update id="updateCourseByCourseName">
+    update edu_course
+    set
+    textbook_id = #{textId,jdbcType=VARCHAR}
+    where name = #{courseName,jdbcType=VARCHAR}
+  </update>
+  <!--getCoursesText-->
+  <select id="getCoursesText" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edu_course
+  </select>
+  <!--getCoursesTextById-->
+  <select id="getCoursesTextById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edu_course
+    where user_id = #{id}
+  </select>
+  <!--getEduCourseById-->
+  <select id="getEduCourseById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edu_course
+    where id = #{id}
+  </select>
+  <!--getCoursesById-->
+  <select id="getCoursesById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edu_course
+    where id = #{id}
+  </select>
+  <!--selectCourseByFind-->
+  <select id="selectCourseByFind" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from edu_course
+    where name LIKE CONCAT(CONCAT('%',#{find,jdbcType=VARCHAR}),'%')
+  </select>
+  <!--selectObjByFind-->
+    <select id="selectObjByFind" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from edu_course
+        where name LIKE CONCAT(CONCAT('%',#{find,jdbcType=VARCHAR}),'%')
+    </select>
+
+</mapper>
